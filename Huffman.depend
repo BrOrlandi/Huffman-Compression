@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1395555189 source:d:\dropbox\huffman\huffman.c
+	"huffman.h"
+	"tree.h"
+
+1395554204 d:\dropbox\huffman\huffman.h
+	"tree.h"
+
+1395551685 d:\dropbox\huffman\tree.h
+
+1395555017 source:d:\dropbox\huffman\main.c
+	<stdio.h>
+	"huffman.h"
+
+1395551648 source:d:\dropbox\huffman\tree.c
+	"tree.h"
+	<stdlib.h>
+
