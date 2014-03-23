@@ -1,10 +1,11 @@
 #include "huffman.h"
 #include "tree.h"
+#include <string.h>
 
 #define MAX_CODE_LENGTH 50
 #define NULL 0
 
-Node *huffman(unsigned char bytes[], int frequences[], int size){
+Node *huffman(unsigned char bytes[],unsigned int frequences[], int size){
 
     Node **array = (Node **) malloc(sizeof(Node *)*size);
 
@@ -97,3 +98,10 @@ char **huffmanCodes(Node *tree, int size, unsigned char bytes[]){
     return codes;
 }
 
+int endsWith(char name[], char end[]){
+    int len = strlen(name);
+    int elen = strlen(end);
+    if(len < elen)
+        return 0;
+    return strncmp(name + len - elen, end, elen) == 0;
+}

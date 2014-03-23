@@ -1,7 +1,7 @@
 #include "tree.h"
 #include <stdlib.h>
 
-Node* newNode(unsigned char byte, int frequence, char isLeaf){
+Node* newNode(unsigned char byte,unsigned int frequence, char isLeaf){
     Node *n = (Node *)malloc(sizeof(Node));
     n->l = n->r = NULL;
     n->byte = byte;

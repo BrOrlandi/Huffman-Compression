@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="fileio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fileio.h" />
 		<Unit filename="huffman.c">
 			<Option compilerVar="CC" />
 		</Unit>
