@@ -15,12 +15,12 @@ Node *huffman(unsigned char bytes[],unsigned int frequences[], int size){
     }
 
     sortNodes(array,size);
-/*
+
     for(i=0;i<size;i++){
-        printf("char %d  freq %d\n",array[i]->byte,array[i]->frequence);
+        printf("char %c  freq %u\n",array[i]->byte,array[i]->frequence);
     }
     printf("\n");
-*/
+//*/
     Node * newnode;
 
     while(size > 1){

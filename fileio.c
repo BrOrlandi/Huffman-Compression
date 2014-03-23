@@ -5,7 +5,7 @@
 unsigned char *fileRead(char name[], unsigned int *size){
     FILE *f = fopen(name, "rb");
     if(f == NULL){
-        printf("File Error: %s\n",name);
+        printf("File not found: %s\n",name);
         exit(1);
     }
 
