@@ -55,8 +55,8 @@ int main(int argc, char *argv[]){
 
         tree = huffman(bytes,frequences,n_bytes);
 
-        char **codes = huffmanCodes(tree,n_bytes,bytes);
-
+        unsigned char **codes = huffmanCodes(tree,n_bytes,bytes);
+/*
         int j;
         for(i=0;i<n_bytes;i++){
             printf("Byte: %c -> ",bytes[i]);
@@ -65,6 +65,10 @@ int main(int argc, char *argv[]){
             }
             printf("\n");
         }
+*/
+        unsigned int nSize;
+
+        huffmanCompressData(data,fsize,bytes,codes,n_bytes,&nSize);
 
     }
 
