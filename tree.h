@@ -5,12 +5,12 @@
 
 typedef struct Node{
     unsigned char byte;
-    unsigned int frequence;
+    unsigned int frequency;
     char isLeaf;
     struct Node *l, *r;
 }Node;
 
-Node* newNode(unsigned char byte,unsigned int frequence, char isLeaf);
+Node* newNode(unsigned char byte,unsigned int frequency, char isLeaf);
 void insertNodeLeft(Node* node, Node* toInsert);
 void insertNodeRight(Node* node, Node* toInsert);
 

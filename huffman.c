@@ -1,6 +1,7 @@
 #include "huffman.h"
 #include "tree.h"
 #include <string.h>
+#include "bitwriter.h"
 
 #define MAX_CODE_LENGTH 50
 #define NULL 0
@@ -15,7 +16,7 @@ void sortNodes(Node **nodes, int size){ // an Insertion Sort implementation
         greatest = nodes[i];
         greatestPos = i;
         for(j=i+1;j<size;j++){
-            if(nodes[j]->frequence > greatest->frequence){
+            if(nodes[j]->frequency > greatest->frequency){
                 greatest = nodes[j];
                 greatestPos = j;
             }
@@ -26,26 +27,26 @@ void sortNodes(Node **nodes, int size){ // an Insertion Sort implementation
     }
 }
 
-Node *huffman(unsigned char bytes[],unsigned int frequences[], int size){
+Node *huffman(unsigned char bytes[],unsigned int frequencies[], int size){
 
     Node **array = (Node **) malloc(sizeof(Node *)*size);
 
     int i;
     for(i=0;i<size;i++){
-        array[i] = newNode(bytes[i],frequences[i],TRUE);
+        array[i] = newNode(bytes[i],frequencies[i],TRUE);
     }
 
     sortNodes(array,size);
-
+//uncomment this to see the bytes and their frequencies
 /*    for(i=0;i<size;i++){
-        printf("char %c  freq %u\n",array[i]->byte,array[i]->frequence);
+        printf("char %c  freq %u\n",array[i]->byte,array[i]->frequency);
     }
     printf("\n");
 //*/
     Node * newnode;
 
     while(size > 1){
-        newnode = newNode(0,array[size-1]->frequence + array[size-2]->frequence, FALSE);
+        newnode = newNode(0,array[size-1]->frequency + array[size-2]->frequency, FALSE);
         insertNodeLeft(newnode,array[size-1]);
         insertNodeRight(newnode,array[size-2]);
         array[size-1] = NULL;
@@ -55,7 +56,7 @@ Node *huffman(unsigned char bytes[],unsigned int frequences[], int size){
         sortNodes(array,size);
 
 /*        for(i=0;i<size;i++){
-            printf("char %d  freq %d\n",array[i]->byte,array[i]->frequence);
+            printf("char %d  freq %d\n",array[i]->byte,array[i]->frequency);
         }
         printf("\n"); */
     }
@@ -107,37 +108,39 @@ int endsWith(char name[], char end[]){
     return strncmp(name + len - elen, end, elen) == 0;
 }
 
-unsigned char *huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned char *bytes,unsigned char **codes, unsigned int sizeOfCodes, int *newSize){
+void huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned char *bytes, unsigned int *frequencies, unsigned char **codes, unsigned int sizeOfCodes, char fileToSave[]){
     unsigned char *byteToCode[256];
     unsigned int i,j;
 
+    BitWriter writer;
+    BitWriter_init(&writer,fileToSave); // write data bits in the compressed file
+
+    // start writing the header of this Huffman compression
+
+    fwrite(&sizeOfCodes,sizeof(int),1,writer.file); // write the number of bytes that have a code
+    //printf("sizeOfCodes = %d\n",sizeOfCodes);
     unsigned char *code;
     for(i=0;i<sizeOfCodes;i++){
-        byteToCode[(int)bytes[i]] = codes[i];
-    }
-/*
-    for(i=0;i<256;i++){
-        code = byteToCode[i];
-        if(code != NULL){
-            printf("%c = ", (char)i);
+        byteToCode[(int)bytes[i]] = codes[i]; // makes an easy array to find the code of byte like a hash
+        fwrite(&(bytes[i]),sizeof(unsigned char),1,writer.file); // write the byte
+        fwrite(&(frequencies[i]),sizeof(unsigned int),1,writer.file); // write his frequency
 
-            for(j=0; code[j] != 2;j++){
-                printf("%d",code[j]);
-            }
-            printf("\n");
-        }
-    }*/
+        //printf("byte = %c    freq = %d\n",bytes[i],frequencies[i]);
+    }
+
     for(i=0;i<sizeOfData;i++){
-        code = byteToCode[data[i]];
-        /*
-        printf("%c = ", data[i]);
-
+        code = byteToCode[data[i]]; // each code is translated here
         for(j=0; code[j] != 2;j++){
-            printf("%d",code[j]);
-        }
-        printf("\n");
-        */
-    }
+            BitWriter_write_bit(&writer,code[j]);
 
-    return 0;
+            //printf("%d",code[j]);
+        }
+        //printf("|");
+    }
+    // the last byte may have zeros on the right, so a new byte is written at the end to just tell how many bits are valid in the last byte of data compressed.
+    char lastBit = (char)writer.bit_number;
+    BitWriter_flush(&writer);
+    BitWriter_write_bits(&writer,lastBit,8);
+
+    BitWriter_close(&writer);
 }

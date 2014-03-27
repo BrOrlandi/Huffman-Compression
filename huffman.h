@@ -3,9 +3,9 @@
 
 #include "tree.h"
 
-Node *huffman(unsigned char bytes[],unsigned int frequences[], int size);
+Node *huffman(unsigned char bytes[],unsigned int frequencies[], int size);
 unsigned char ** huffmanCodes(Node *tree, int size, unsigned char bytes[]);
-unsigned char *huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned char *bytes,unsigned char **codes, unsigned int size, int *newSize);
+void huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned char *bytes, unsigned int *frequencies, unsigned char **codes, unsigned int sizeOfCodes, char fileToSave[]);
 int endsWith(char name[], char end[]);
 
 #endif // HUFFMAN_H

@@ -8,10 +8,10 @@ This algorithm was implemented by Bruno Orlandi. 2014
 
 int main(int argc, char *argv[]){
 
-    /*if(argc < 2){ // the file must be in the arguments
+    if(argc < 2){ // the file must be in the arguments
         printf("Usage: [input file] , if the input file ends with '.hff' it will be decompressed otherwise will be compressed in a '.hff' file.\n");
         return 0;
-    }*/
+    }
 
     //char *fileName = argv[1]; // name of the file to be compressed or decompressed
     char *fileName = "lorem.txt";
@@ -29,11 +29,11 @@ int main(int argc, char *argv[]){
         printf("Compressing file %s...\n",fileName);
 
         unsigned char bytes[256]; // array to store the bytes reads from the file
-        unsigned int frequences[256]; // array to store the frequency of the bytes that appear in the file
+        unsigned int frequencies[256]; // array to store the frequency of the bytes that appear in the file
         int n_bytes = 0; // will be used to count the bytes inserted in the arrays above
 
-        unsigned int *tmpfreq = (unsigned int *)calloc(sizeof(unsigned int),256); // temporary to count bytes frequences in file data
-
+        unsigned int *tmpfreq = (unsigned int *)calloc(sizeof(unsigned int),256); // temporary to count bytes frequencies in file data
+        printf("Counting bytes frequencies.\n");
         for(i=0;i<fsize;i++){
             tmpfreq[data[i]]++; // counting number of times each byte appears on the file
         }
@@ -41,21 +41,25 @@ int main(int argc, char *argv[]){
         for(i=0;i<256;i++){ // store in the arrays all the bytes with frequency greater than zero and their frequency
             if(tmpfreq[i] > 0){
                 bytes[n_bytes] = (unsigned char)i;
-                frequences[n_bytes] = tmpfreq[i];
+                frequencies[n_bytes] = tmpfreq[i];
                 n_bytes++;
             }
         }
 
         //unsigned char bytes[] = {1, 2, 3, 4, 5, 6};
-        //unsigned int frequences[] = {45, 13, 12, 16, 9, 5};
+        //unsigned int frequencies[] = {45, 13, 12, 16, 9, 5};
 
         Node *tree; // huffman tre
 
         //int size = sizeof(bytes)/sizeof(bytes[0]);
 
-        tree = huffman(bytes,frequences,n_bytes);
+        printf("Creating Huffman tree.\n");
+        tree = huffman(bytes,frequencies,n_bytes);
 
+        printf("Generating Huffman codes.\n");
         unsigned char **codes = huffmanCodes(tree,n_bytes,bytes);
+
+// uncomment this to see bytes and their codes;
 /*
         int j;
         for(i=0;i<n_bytes;i++){
@@ -65,10 +69,16 @@ int main(int argc, char *argv[]){
             }
             printf("\n");
         }
-*/
+//*/
         unsigned int nSize;
 
-        huffmanCompressData(data,fsize,bytes,codes,n_bytes,&nSize);
+        char fileNewName[strlen(fileName) + 4];
+        strcpy(fileNewName,fileName);
+        strcat(fileNewName,".hff");
+
+        printf("Compressing file in: %s\n",fileNewName);
+
+        huffmanCompressData(data,fsize,bytes, frequencies,codes,n_bytes,fileNewName);
 
     }
 
