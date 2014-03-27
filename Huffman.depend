@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1395898057 source:d:\dropbox\huffman\huffman.c
+1395901437 source:d:\dropbox\huffman\huffman.c
 	"huffman.h"
 	"tree.h"
 	<string.h>
@@ -10,7 +10,7 @@
 
 1395896537 d:\dropbox\huffman\tree.h
 
-1395896889 source:d:\dropbox\huffman\main.c
+1395901572 source:d:\dropbox\huffman\main.c
 	<stdio.h>
 	"huffman.h"
 	"fileio.h"
@@ -19,12 +19,12 @@
 	"tree.h"
 	<stdlib.h>
 
-1395634986 source:d:\dropbox\huffman\fileio.c
+1395899901 source:d:\dropbox\huffman\fileio.c
 	<stdio.h.>
 	<stdlib.h.>
 	"fileio.h"
 
-1395635002 d:\dropbox\huffman\fileio.h
+1395898845 d:\dropbox\huffman\fileio.h
 	"tree.h"
 
 1395892296 source:d:\dropbox\huffman\bitwriter.c

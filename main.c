@@ -13,20 +13,29 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    //char *fileName = argv[1]; // name of the file to be compressed or decompressed
-    char *fileName = "lorem.txt";
+    char *fileName = argv[1]; // name of the file to be compressed or decompressed
 
     unsigned int fsize; // size of the file to be calculated
     unsigned char *data; // the data read from the file
 
     if(endsWith(fileName,".hff")){ // check if the file is an '.hff' file, if it is, decompress
-        printf("%s is huffman file.\n",fileName);
+        printf("Decompressing file %s ...\n",fileName);
+
+        printf("Reconstructing Huffman tree.\n");
+        Node *htree = huffmanFileRead(fileName,&data,&fsize);
+
+        unsigned int nsize; // new size of data after decompress
+        unsigned char *ndata; // new data after decompress
+
+        printf("Decoding Huffman codes.\n");
+        ndata = huffmanDecode(data,fsize,htree,&nsize);
+
     }
     else{ // otherwise, the file will be compressed in a hff file
 
         int i;
         data = fileRead(fileName,&fsize); // read the file and stores in data
-        printf("Compressing file %s...\n",fileName);
+        printf("Compressing file %s ...\n",fileName);
 
         unsigned char bytes[256]; // array to store the bytes reads from the file
         unsigned int frequencies[256]; // array to store the frequency of the bytes that appear in the file
@@ -57,13 +66,14 @@ int main(int argc, char *argv[]){
         tree = huffman(bytes,frequencies,n_bytes);
 
         printf("Generating Huffman codes.\n");
-        unsigned char **codes = huffmanCodes(tree,n_bytes,bytes);
+        unsigned char bytes2[256];
+        unsigned char **codes = huffmanCodes(tree,n_bytes,bytes2);
 
 // uncomment this to see bytes and their codes;
 /*
         int j;
         for(i=0;i<n_bytes;i++){
-            printf("Byte: %c -> ",bytes[i]);
+            printf("Byte: %c -> ",bytes2[i]);
             for(j=0; codes[i][j] != 2;j++){
                 printf("%d",codes[i][j]);
             }

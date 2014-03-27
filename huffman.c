@@ -38,7 +38,8 @@ Node *huffman(unsigned char bytes[],unsigned int frequencies[], int size){
 
     sortNodes(array,size);
 //uncomment this to see the bytes and their frequencies
-/*    for(i=0;i<size;i++){
+
+    for(i=0;i<size;i++){
         printf("char %c  freq %u\n",array[i]->byte,array[i]->frequency);
     }
     printf("\n");
@@ -64,14 +65,15 @@ Node *huffman(unsigned char bytes[],unsigned int frequencies[], int size){
     return array[0];
 }
 
-void deepCodes(Node *root, char tcode[], int last, unsigned char bytes[], char **codes, int *lastCode){
+// depth-first to reach the codes
+void depthCodes(Node *root, char tcode[], int last, unsigned char bytes[], char **codes, int *lastCode){
     if(root->l != NULL){
         tcode[last] = 0;
-        deepCodes(root->l,tcode,last+1,bytes,codes,lastCode);
+        depthCodes(root->l,tcode,last+1,bytes,codes,lastCode);
     }
     if(root->r != NULL){
         tcode[last] = 1;
-        deepCodes(root->r,tcode,last+1,bytes,codes,lastCode);
+        depthCodes(root->r,tcode,last+1,bytes,codes,lastCode);
     }
     if(root->isLeaf == TRUE){
         int i;
@@ -95,9 +97,13 @@ unsigned char **huffmanCodes(Node *tree, int size, unsigned char bytes[]){
     int lastCode = 0;
 
     char tcode[MAX_CODE_LENGTH];
-    deepCodes(tree,tcode,0,bytes,codes,&lastCode);
+    depthCodes(tree,tcode,0,bytes,codes,&lastCode);
 
     return codes;
+}
+
+unsigned char *huffmanDecode(unsigned char *data, unsigned int sizeOfData, Node *htree, unsigned int *newSize){
+ // TODO decode extracting bits and using the H-Tree
 }
 
 int endsWith(char name[], char end[]){
@@ -131,7 +137,7 @@ void huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned 
     for(i=0;i<sizeOfData;i++){
         code = byteToCode[data[i]]; // each code is translated here
         for(j=0; code[j] != 2;j++){
-            BitWriter_write_bit(&writer,code[j]);
+            //BitWriter_write_bit(&writer,code[j]);
 
             //printf("%d",code[j]);
         }
