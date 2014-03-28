@@ -1,36 +1,48 @@
 # depslib dependency file v1.0
-1395901437 source:d:\dropbox\huffman\huffman.c
-	"huffman.h"
-	"tree.h"
-	<string.h>
-	"bitwriter.h"
-
-1395896477 d:\dropbox\huffman\huffman.h
-	"tree.h"
-
-1395896537 d:\dropbox\huffman\tree.h
-
-1395901572 source:d:\dropbox\huffman\main.c
-	<stdio.h>
-	"huffman.h"
-	"fileio.h"
-
-1395896524 source:d:\dropbox\huffman\tree.c
-	"tree.h"
-	<stdlib.h>
-
-1395899901 source:d:\dropbox\huffman\fileio.c
-	<stdio.h.>
-	<stdlib.h.>
-	"fileio.h"
-
-1395898845 d:\dropbox\huffman\fileio.h
-	"tree.h"
-
 1395892296 source:d:\dropbox\huffman\bitwriter.c
 	"bitwriter.h"
 
 1395891991 d:\dropbox\huffman\bitwriter.h
 	<stdlib.h>
 	<stdio.h>
+
+1395896524 source:d:\dropbox\huffman\tree.c
+	"tree.h"
+	<stdlib.h>
+
+1395896537 d:\dropbox\huffman\tree.h
+
+1395993525 source:d:\dropbox\huffman\bitreader.c
+	"bitreader.h"
+
+1395986143 d:\dropbox\huffman\bitreader.h
+	<stdlib.h>
+	<stdio.h>
+
+1395980252 source:d:\dropbox\huffman\bitreadertest.c
+	<stdio.h>
+	"bitreader.h"
+
+1395993794 source:d:\dropbox\huffman\fileio.c
+	<stdio.h.>
+	<stdlib.h.>
+	"fileio.h"
+	"bitreader.h"
+
+1395993630 d:\dropbox\huffman\fileio.h
+	"tree.h"
+
+1395993552 source:d:\dropbox\huffman\huffman.c
+	"huffman.h"
+	"tree.h"
+	<string.h>
+	"bitwriter.h"
+
+1395990662 d:\dropbox\huffman\huffman.h
+	"tree.h"
+
+1395993624 source:d:\dropbox\huffman\main.c
+	<stdio.h>
+	"huffman.h"
+	"fileio.h"
 

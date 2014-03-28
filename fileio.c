@@ -1,6 +1,7 @@
 #include <stdio.h.>
 #include <stdlib.h.>
 #include "fileio.h"
+#include "bitreader.h"
 
 unsigned char *fileRead(char name[], unsigned int *size){
     FILE *f = fopen(name, "rb");
@@ -28,18 +29,18 @@ unsigned char *fileRead(char name[], unsigned int *size){
     return data;
 }
 
-Node *huffmanFileRead(char name[], unsigned char **data, unsigned int *size){
+int huffmanFileRead(char name[], unsigned char **data, unsigned int *size){
 
-    FILE *f = fopen(name,"rb");
-    if(f == NULL){
-        printf("File not found: %s\n",name);
-        exit(1);
-    }
+    BitReader reader;
+    BitReader_init(&reader,name);
 
+    // Header read
     int n_bytes; // stores how many bytes are coded
     // the following arrays has the same function of the compression, but now those data will be read from file
     unsigned char bytes[256];
     unsigned int frequencies[256];
+
+    FILE *f = reader.file;
 
     fread(&n_bytes,(sizeof(int)),1,f);
 
@@ -51,26 +52,46 @@ Node *huffmanFileRead(char name[], unsigned char **data, unsigned int *size){
         //printf("byte = %c    freq = %d\n",bytes[i],frequencies[i]);
     }
 
+    // Reconstructing Huffman Tree with the data read from header
+
     Node *tree; // huffman tre
-
     tree = huffman(bytes,frequencies,n_bytes);
+    Node *iterator = tree; // node to search codes in tree
 
-    fseek(f,0L,SEEK_END);
-    *size = ftell(f);
-    fseek(f, 0, SEEK_SET);
+    unsigned int maxSize = 100;
+    (*data) = (unsigned char *)malloc(sizeof(unsigned char)*maxSize);
+    unsigned int pos = 0;
 
-    *data = (unsigned char *)malloc(sizeof(unsigned char)*(*size));
-    if(*data == NULL){
-        printf("Memory Error: %s\n",name);
-        exit(1);
+    unsigned char read;
+    while(BitReader_read_bit(&reader,&read)){
+        if(read == 0){
+            iterator = iterator->l;
+        }else{
+            iterator = iterator->r;
+        }
+        if(iterator->isLeaf == TRUE){
+            //printf("%c",iterator->byte);
+
+            // store in data
+            (*data)[pos] = iterator->byte;
+            pos++;
+            if(pos == maxSize){ // if reach max capacity realloc
+                maxSize += 100;
+                (*data) = (unsigned char *)realloc((*data),maxSize*sizeof(unsigned char));
+            }
+
+            iterator = tree;
+        }
     }
+    *size = pos;
 
-    unsigned int readed = fread(*data,1,*size,f);
-    if(readed != *size){
-        printf("Reading Error: %s\n",name);
-        exit(1);
-    }
+    BitReader_close(&reader);
+    return 0;
+}
+
+int fileWrite(char name[], unsigned char *data, unsigned int size)
+{
+    FILE *f = fopen(name,"wb");
+    fwrite(data,sizeof(unsigned char),size,f);
     fclose(f);
-
-    return tree;
 }

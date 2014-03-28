@@ -1,11 +1,15 @@
 # Objects
 *.o
 
+# Unnecessary Code Blocks files
+*.layout
+*.depend
+
 # Executables
 *.exe
 
-# Diretorio de binario do codeblocks
+# Bin folder of Code Blocks
 bin/
 
-# Diretorio objects do codeblocks
+# Obj folder of Code Blocks
 obj/

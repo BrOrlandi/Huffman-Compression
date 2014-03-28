@@ -38,7 +38,7 @@ Node *huffman(unsigned char bytes[],unsigned int frequencies[], int size){
 
     sortNodes(array,size);
 //uncomment this to see the bytes and their frequencies
-
+/*
     for(i=0;i<size;i++){
         printf("char %c  freq %u\n",array[i]->byte,array[i]->frequency);
     }
@@ -102,10 +102,6 @@ unsigned char **huffmanCodes(Node *tree, int size, unsigned char bytes[]){
     return codes;
 }
 
-unsigned char *huffmanDecode(unsigned char *data, unsigned int sizeOfData, Node *htree, unsigned int *newSize){
- // TODO decode extracting bits and using the H-Tree
-}
-
 int endsWith(char name[], char end[]){
     int len = strlen(name);
     int elen = strlen(end);
@@ -114,7 +110,7 @@ int endsWith(char name[], char end[]){
     return strncmp(name + len - elen, end, elen) == 0;
 }
 
-void huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned char *bytes, unsigned int *frequencies, unsigned char **codes, unsigned int sizeOfCodes, char fileToSave[]){
+void huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned char *bytesCodes, unsigned char *bytes, unsigned int *frequencies, unsigned char **codes, unsigned int sizeOfCodes, char fileToSave[]){
     unsigned char *byteToCode[256];
     unsigned int i,j;
 
@@ -127,26 +123,37 @@ void huffmanCompressData(unsigned char *data, unsigned int sizeOfData, unsigned 
     //printf("sizeOfCodes = %d\n",sizeOfCodes);
     unsigned char *code;
     for(i=0;i<sizeOfCodes;i++){
-        byteToCode[(int)bytes[i]] = codes[i]; // makes an easy array to find the code of byte like a hash
+        byteToCode[(int)bytesCodes[i]] = codes[i]; // makes an easy array to find the code of byte like a hash
         fwrite(&(bytes[i]),sizeof(unsigned char),1,writer.file); // write the byte
         fwrite(&(frequencies[i]),sizeof(unsigned int),1,writer.file); // write his frequency
+/*
+        printf("byte = %c    freq = %d\n",bytes[i],frequencies[i]);
 
-        //printf("byte = %c    freq = %d\n",bytes[i],frequencies[i]);
+        printf("%c = ",bytesCodes[i]);
+        code = codes[i]; // each code is translated here
+        for(j=0; code[j] != 2;j++){
+            printf("%d",code[j]);
+        }
+        printf("\n");
+//        */
     }
 
+    //int count = 0;
     for(i=0;i<sizeOfData;i++){
         code = byteToCode[data[i]]; // each code is translated here
-        for(j=0; code[j] != 2;j++){
-            //BitWriter_write_bit(&writer,code[j]);
 
+        for(j=0; code[j] != 2;j++){
+            BitWriter_write_bit(&writer,code[j]); // write the each bit of the code
+            //count++;
             //printf("%d",code[j]);
+            //if(count%8==0)
+            //    printf("\n");
         }
-        //printf("|");
     }
     // the last byte may have zeros on the right, so a new byte is written at the end to just tell how many bits are valid in the last byte of data compressed.
-    char lastBit = (char)writer.bit_number;
+    char lastByte = (char)writer.bit_number;
     BitWriter_flush(&writer);
-    BitWriter_write_bits(&writer,lastBit,8);
+    BitWriter_write_bits(&writer,lastByte,8);
 
     BitWriter_close(&writer);
 }

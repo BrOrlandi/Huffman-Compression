@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="lorem.txt.hff" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -31,6 +32,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="bitReaderTest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bitreader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bitreader.h" />
+		<Unit filename="bitwriter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bitwriter.h" />
 		<Unit filename="fileio.c">
 			<Option compilerVar="CC" />
 		</Unit>
