@@ -12,7 +12,7 @@
 
 1395896537 d:\dropbox\huffman\tree.h
 
-1395993525 source:d:\dropbox\huffman\bitreader.c
+1396019288 source:d:\dropbox\huffman\bitreader.c
 	"bitreader.h"
 
 1395986143 d:\dropbox\huffman\bitreader.h
@@ -23,25 +23,25 @@
 	<stdio.h>
 	"bitreader.h"
 
-1395993794 source:d:\dropbox\huffman\fileio.c
+1396037452 source:d:\dropbox\huffman\fileio.c
 	<stdio.h.>
 	<stdlib.h.>
 	"fileio.h"
 	"bitreader.h"
 
-1395993630 d:\dropbox\huffman\fileio.h
+1396034877 d:\dropbox\huffman\fileio.h
 	"tree.h"
 
-1395993552 source:d:\dropbox\huffman\huffman.c
+1396029569 source:d:\dropbox\huffman\huffman.c
 	"huffman.h"
 	"tree.h"
 	<string.h>
 	"bitwriter.h"
 
-1395990662 d:\dropbox\huffman\huffman.h
+1396034800 d:\dropbox\huffman\huffman.h
 	"tree.h"
 
-1395993624 source:d:\dropbox\huffman\main.c
+1396038043 source:d:\dropbox\huffman\main.c
 	<stdio.h>
 	"huffman.h"
 	"fileio.h"

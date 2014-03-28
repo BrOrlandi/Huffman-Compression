@@ -16,8 +16,8 @@ int BitReader_init(BitReader *reader, char *filename){
     fread(&(reader->lastByteInfo),sizeof(unsigned char),1,reader->file);
     fseek(reader->file, 0, SEEK_SET);
 
-    printf("Last byte info: %d\n", reader->lastByteInfo);
-    printf("Last byte pos: %d\n", reader->lastBytePosition);
+    //printf("Last byte info: %d\n", reader->lastByteInfo);
+    //printf("Last byte pos: %d\n", reader->lastBytePosition);
 
     return (int) reader->file;
 }
