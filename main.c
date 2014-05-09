@@ -4,10 +4,10 @@ This algorithm was implemented by Bruno Orlandi. 2014
 
 #include <stdio.h>
 #include "huffman.h"
-#include "fileio.h"
 
 int main(int argc, char *argv[]){
-
+    return main_test(argc,argv);
+/*
     if(argc < 2){ // the file must be in the arguments
         printf("Usage: [input file] , if the input file ends with '.hff' it will be decompressed otherwise will be compressed in a '.hff' file.\n");
         return 0;
@@ -42,6 +42,6 @@ int main(int argc, char *argv[]){
 
     }
 
-
+*/
     return 0;
 }

@@ -49,7 +49,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="huffman.h" />
+		<Unit filename="huffman2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="huffman2.h" />
 		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="new_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="tree.c">

@@ -10,8 +10,9 @@ typedef struct Node{
     struct Node *l, *r;
 }Node;
 
-Node* newNode(unsigned char byte,unsigned int frequency, char isLeaf);
-void insertNodeLeft(Node* node, Node* toInsert);
-void insertNodeRight(Node* node, Node* toInsert);
+Node* Tree_newNode(unsigned char byte,unsigned int frequency, char isLeaf);
+void Tree_insertNodeLeft(Node* node, Node* toInsert);
+void Tree_insertNodeRight(Node* node, Node* toInsert);
+void Tree_free(Node *node);
 
 #endif // TREE_H
