@@ -3,7 +3,17 @@ Huffman Compression Algorithm
 
 This compression works better in text files without any compression, Bitmap images(BMP).
 
-Compile and use a file as argument. The file will be compressed in a *HFF* file.
-If the file ends with *.hff* it will be decompressed.
+Usage: 
+```shell
+<input file> [optional -d] <output file>
+```
+ -d  The input file will be decompressed to output file
 
-Developed using Code Blocks 13.12
+Example:
+```shell
+Huffman.exe "sample.txt" "sample.txt.hff"
+
+Huffman.exe "sample.txt.hff" -d "decompressed sample.txt"
+```
+
+Developed using Code Blocks 13.12 on Windows
